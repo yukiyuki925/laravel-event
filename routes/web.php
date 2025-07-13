@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// イベント一覧
+Route::middleware('auth')->group(
+    function () {
+        Route::get('/', [EventController::class, 'index'])->name('index');
+    }
+);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -17,4 +17,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+// /event
+Route::middleware('auth')->group(
+    function () {
+        Route::prefix('event')->name('event.')->group(function () {
+            // イベント新規登録画面
+            Route::get('create', [EventController::class, 'create'])->name('create');
+            // イベント新規登録処理
+            Route::post('store', [EventController::class, 'store'])->name('store');
+        });
+    }
+);
+
+require __DIR__ . '/auth.php';
