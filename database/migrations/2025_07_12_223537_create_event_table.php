@@ -26,7 +26,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->index()->constrained()->onDelete('cascade');
             $table->string('event_title');
             $table->text('description');
-            $table->date('event_date')->index();
+            $table->date('start_event_date')->index();
+            $table->date('end_event_date')->index();
             $table->string('img')->nullable();
             $table->integer('price')->index();
             $table->string('place')->index();
