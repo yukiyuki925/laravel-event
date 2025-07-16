@@ -29,7 +29,7 @@ return new class extends Migration
             $table->date('start_event_date')->index();
             $table->date('end_event_date')->index();
             $table->string('img')->nullable();
-            $table->integer('price')->index();
+            $table->integer('price')->nullable()->index();
             $table->string('place')->index();
             $table->foreignId('tag_id')->nullable()->index()->constrained()->onDelete('cascade');
             $table->foreignId('area_id')->nullable()->index()->constrained()->onDelete('cascade');
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('favorite', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->primary(['user_id', 'event_id']);
@@ -49,9 +49,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event');
-        Schema::dropIfExists('tag');
-        Schema::dropIfExists('area');
-        Schema::dropIfExists('favorite');
+        Schema::dropIfExists('events');
+        Schema::dropIfExists('tags');
+        Schema::dropIfExists('areas');
+        Schema::dropIfExists('favorites');
     }
 };

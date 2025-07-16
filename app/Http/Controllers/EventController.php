@@ -14,7 +14,15 @@ class EventController extends Controller
 {
     public function index(Request $request): View
     {
-        return view('event.index');
+        $events = Event::all();
+
+        // 年月日形式に整形
+        foreach ($events as $event) {
+            $event->formatted_start_date = Carbon::parse($event->start_event_date)->format('Y年n月j日');
+            $event->formatted_end_date = Carbon::parse($event->end_event_date)->format('Y年n月j日');
+        }
+
+        return view('event.index', compact('events'));
     }
 
     public function create(): View
@@ -34,17 +42,10 @@ class EventController extends Controller
             "place" => 'required',
             "price" => 'required_if:price_type,paid',
             "area_id" => 'required',
-            "tag_id" => 'required'
+            "tag_id" => 'nullable'
         ]);
 
-        // 保存処理
         $event = new Event();
-
-        // 無料 or 有料で金額セット
-        $event->price = $request->price_type === 'paid'
-            ? $validated['price']
-            : 0;
-
         $event->fill($validated);
 
         // 画像処理
@@ -57,5 +58,11 @@ class EventController extends Controller
         $event->save();
 
         return redirect()->route('index')->with('success', 'イベントを登録しました');
+    }
+
+    public function show($id): View
+    {
+        $event = Event::findOrFail($id);
+        return view('event.show', compact('event'));
     }
 }

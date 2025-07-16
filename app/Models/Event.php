@@ -17,4 +17,14 @@ class Event extends Model
         'price',
         'img',
     ];
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return asset('storage/' . $this->img);
+    }
 }

@@ -33,6 +33,8 @@ Route::middleware('auth')->group(
             Route::get('create', [EventController::class, 'create'])->name('create');
             // イベント新規登録処理
             Route::post('store', [EventController::class, 'store'])->name('store');
+            // イベント詳細表示
+            Route::get('{id}', [EventController::class, 'show'])->name('show');
         });
     }
 );
