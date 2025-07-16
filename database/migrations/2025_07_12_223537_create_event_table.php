@@ -28,6 +28,8 @@ return new class extends Migration
             $table->text('description');
             $table->date('start_event_date')->index();
             $table->date('end_event_date')->index();
+            $table->time('start_time');
+            $table->time('end_time');
             $table->string('img')->nullable();
             $table->integer('price')->nullable()->index();
             $table->string('place')->index();

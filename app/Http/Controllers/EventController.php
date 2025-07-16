@@ -7,7 +7,6 @@ use App\Models\Area;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -15,13 +14,6 @@ class EventController extends Controller
     public function index(Request $request): View
     {
         $events = Event::all();
-
-        // 年月日形式に整形
-        foreach ($events as $event) {
-            $event->formatted_start_date = Carbon::parse($event->start_event_date)->format('Y年n月j日');
-            $event->formatted_end_date = Carbon::parse($event->end_event_date)->format('Y年n月j日');
-        }
-
         return view('event.index', compact('events'));
     }
 
@@ -38,6 +30,8 @@ class EventController extends Controller
             "event_title" => 'required|max:255',
             "start_event_date" => 'required|date',
             "end_event_date" => 'required|date|after_or_equal:start_event_date',
+            "start_time" => 'required',
+            "end_time" => 'required',
             "description" => 'required',
             "place" => 'required',
             "price" => 'required_if:price_type,paid',
