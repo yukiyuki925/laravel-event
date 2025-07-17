@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MypageController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // イベント一覧
@@ -25,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// /event
+// event
 Route::middleware('auth')->group(
     function () {
         Route::prefix('event')->name('event.')->group(function () {
@@ -35,6 +36,14 @@ Route::middleware('auth')->group(
             Route::post('store', [EventController::class, 'store'])->name('store');
             // イベント詳細表示
             Route::get('{id}', [EventController::class, 'show'])->name('show');
+        });
+
+        // profile
+        Route::prefix('mypage')->name('mypage.')->group(function () {
+            // プロフィール画面
+            Route::get('index', [MypageController::class, 'index'])->name('index');
+            // イベント新規登録処理
+            Route::post('store', [EventController::class, 'store'])->name('store');
         });
     }
 );

@@ -66,8 +66,8 @@
                 </div>
 
                 <div class="sm:col-span-2 my-1">
-                    <label for="img" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像</label>
-                    <div class="relative w-fit">
+                    <label for="img" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像<span class="ml-2 inline-block rounded bg-blue-100 px-2 py-0.5 text-xs text-blue-700">必須</span></label>
+                    <div class="relative w-fit my-3">
                         <input
                             type="file"
                             name="img"
@@ -81,6 +81,9 @@
                                    hover:file:bg-blue-100
                                    focus:outline-none"
                         />
+                        @error('img')
+                            <p class="text-red-600 text-sm mt-1">※ {{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -121,14 +124,22 @@
                 </div>
 
                 <div class="sm:col-span-2">
-                    <label for="tag_id" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">タグ</label>
-                    <select name="tag_id" id="tag_id"
-                        class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none focus:ring">
-                        <option value="">選択してください</option>
+                    <label class="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+                        タグ
+                    </label>
+
+                    <div class="flex flex-wrap gap-3">
                         @foreach($tags as $tag)
-                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            <label class="inline-flex items-center space-x-2">
+                                <input type="checkbox"
+                                    name="tag_id[]"
+                                    value="{{ $tag->id }}"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring focus:ring-blue-200"
+                                    {{ in_array($tag->id, old('tag_id', [])) ? 'checked' : '' }}>
+                                <span class="text-sm text-gray-700">{{ $tag->name }}</span>
+                            </label>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
             </form>
         </div>

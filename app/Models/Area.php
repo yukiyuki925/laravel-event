@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model
 {
-    public function area()
+    public function events()
     {
         return $this->hasMany(Event::class);
     }

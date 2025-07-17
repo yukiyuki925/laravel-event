@@ -14,13 +14,20 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Alpine.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-200">
         <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ __('イベント') }}
+            <div class="flex justify-between items-center">
+                <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+                    <a href="{{ route('index')}}">イベント</a>
+                </div>
+                <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+                    @include('components.nav')
+                </div>
             </div>
         </header>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

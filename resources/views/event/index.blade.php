@@ -26,6 +26,14 @@
                                 <p class="mt-1 mb-1">エリア：{{$event->area->name}}</p>
                                 <p>開催地：{{$event->place}}</p>
                             </div>
+
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                @foreach ($event->tags as $tag)
+                                    <span class="inline-block rounded-full border border-blue-500 px-4 py-1 text-blue-500 text-sm">
+                                        {{ $tag->name }}
+                                    </span>
+                                @endforeach
+                            </div>
                         </div>
                     @endforeach
                 </div>

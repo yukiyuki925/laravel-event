@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Models\Area;
+use App\Models\Event;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -32,11 +33,11 @@ class EventController extends Controller
             "end_event_date" => 'required|date|after_or_equal:start_event_date',
             "start_time" => 'required',
             "end_time" => 'required',
+            "img" => 'required',
             "description" => 'required',
             "place" => 'required',
             "price" => 'required_if:price_type,paid',
             "area_id" => 'required',
-            "tag_id" => 'nullable'
         ]);
 
         $event = new Event();
@@ -50,6 +51,9 @@ class EventController extends Controller
         $event->user_id = auth()->id();
         $event->post_date = Carbon::now();
         $event->save();
+
+        $tagIds = $request->input('tag_id', []);
+        $event->tags()->attach($tagIds);
 
         return redirect()->route('index')->with('success', 'イベントを登録しました');
     }

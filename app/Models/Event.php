@@ -16,7 +16,6 @@ class Event extends Model
         'end_time',
         'description',
         'place',
-        'tag_id',
         'price',
         'img',
     ];
@@ -24,6 +23,11 @@ class Event extends Model
     public function area()
     {
         return $this->belongsTo(Area::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public function getImageUrlAttribute()

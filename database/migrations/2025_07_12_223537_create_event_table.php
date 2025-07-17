@@ -30,19 +30,24 @@ return new class extends Migration
             $table->date('end_event_date')->index();
             $table->time('start_time');
             $table->time('end_time');
-            $table->string('img')->nullable();
+            $table->string('img');
             $table->integer('price')->nullable()->index();
             $table->string('place')->index();
-            $table->foreignId('tag_id')->nullable()->index()->constrained()->onDelete('cascade');
             $table->foreignId('area_id')->nullable()->index()->constrained()->onDelete('cascade');
             $table->dateTime('post_date')->index();
             $table->timestamps();
         });
 
-        Schema::create('favorites', function (Blueprint $table) {
+        Schema::create('favorite', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->primary(['user_id', 'event_id']);
+        });
+
+        Schema::create('event_tag', function (Blueprint $table) {
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->primary(['event_id', 'tag_id']);
         });
     }
 
@@ -54,6 +59,7 @@ return new class extends Migration
         Schema::dropIfExists('events');
         Schema::dropIfExists('tags');
         Schema::dropIfExists('areas');
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('favorite');
+        Schema::dropIfExists('event_tag');
     }
 };
