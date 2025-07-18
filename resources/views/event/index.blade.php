@@ -9,8 +9,37 @@
                 <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach ($events as $event)
                         <div>
-                            <a href="{{ route('event.show', $event->id) }}"
-                            class="hover:gray-800 mb-1 text-black transition duration-100 lg:text-lg">{{$event->event_title}}</a>
+                            <div class="flex items-center gap-2 justify-center">
+                                <a href="{{ route('event.show', $event->id) }}"
+                                class="hover:gray-800 mb-1 text-black transition duration-100 lg:text-lg">{{$event->event_title}}</a>
+                                @if (auth()->user()->id != $event->user_id)
+                                    <form action="{{ route('event-like', $event->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="hover:opacity-70">
+                                            @if (auth()->user()->likedEvents->contains($event->id))
+                                            {{-- いいね済み --}}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-500 fill-current" viewBox="0 0 24 24">
+                                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                                                            2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                                                            C13.09 3.81 14.76 3 16.5 3
+                                                            19.58 3 22 5.42 22 8.5
+                                                            c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                                </svg>
+                                            @else
+                                            {{-- 未いいね --}}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                                                            2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                                                            C13.09 3.81 14.76 3 16.5 3
+                                                            19.58 3 22 5.42 22 8.5
+                                                            c0 3.78-3.4 6.86-8.55 11.54L12 21z" />
+                                                </svg>
+                                            @endif
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                             <a href="{{ route('event.show', $event->id) }}"
                                 class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-gray-100 lg:mb-3">
                                 <img src="{{ $event->image_url }}" alt="イベント画像"

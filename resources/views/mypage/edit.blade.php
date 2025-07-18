@@ -164,7 +164,7 @@
 
     <div class="flex flex-wrap justify-end gap-5 mt-4 pb-5">
         <a href="{{route('mypage.create-index')}}" class="rounded-lg border border-blue-400 bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-white hover:bg-blue-700 focus:ring focus:ring-white-200 disabled:cursor-not-allowed disabled:border-blue-300 disabled:bg-blue-300">一覧へ戻る</a>
-        <button onclick="document.getElementById('event-form').submit();" class="rounded-lg border border-blue-400 bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-white hover:bg-blue-700 focus:ring focus:ring-white-200 disabled:cursor-not-allowed disabled:border-blue-300 disabled:bg-blue-300">イベントを作成</button>
+        <button onclick="document.getElementById('event-form').submit();" class="rounded-lg border border-blue-400 bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-white hover:bg-blue-700 focus:ring focus:ring-white-200 disabled:cursor-not-allowed disabled:border-blue-300 disabled:bg-blue-300">イベントを編集</button>
     </div>
 
 </x-event-layout>

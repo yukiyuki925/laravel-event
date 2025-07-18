@@ -38,7 +38,7 @@ class MypageController extends Controller
         $areas = Area::all();
         $tags = Tag::all();
         $event = Event::with('tags')->findOrFail($id);
-        return view('mypage.edit', compact('event','areas','tags'));
+        return view('mypage.edit', compact('event', 'areas', 'tags'));
     }
 
     public function update(Request $request, $id)
@@ -76,4 +76,16 @@ class MypageController extends Controller
         return redirect()->route('mypage.create-index')->with('success', 'イベントを更新しました');
     }
 
+    public function likes(Request $request): View
+    {
+        $user = $request->user();
+        $events = $user->likedEvents;
+        return view('mypage.likes',compact('events'));
+    }
+
+    public function likesShow($id): View
+    {
+        $event = Event::findOrFail($id);
+        return view('mypage.likesShow',compact('event'));
+    }
 }

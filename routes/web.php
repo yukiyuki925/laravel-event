@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventLikeController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -38,20 +39,20 @@ Route::middleware('auth')->group(
             Route::get('{id}', [EventController::class, 'show'])->name('show');
         });
 
+        // likes
+        Route::post('/event/{event}/like', [EventLikeController::class, 'like'])
+            ->middleware('auth')
+            ->name('event-like');
+
         // profile
         Route::prefix('mypage')->name('mypage.')->group(function () {
-            // プロフィール画面
             Route::get('index', [MypageController::class, 'index'])->name('index');
-            // 作成したイベント一覧
             Route::get('create-index', [MypageController::class, 'createIndex'])->name('create-index');
-            // 作成したイベント詳細
-            Route::get('{id}', [MypageController::class, 'show'])->name('show');
-            // 編集画面
+            Route::get('likes', [MypageController::class, 'likes'])->name('likes');
+            Route::get('likes/{id}', [MypageController::class, 'likesShow'])->name('likes-show');
             Route::get('{id}/edit', [MypageController::class, 'edit'])->name('edit');
-            // 編集処理
             Route::put('{id}', [MypageController::class, 'update'])->name('update');
-            // いいねしたイベント一覧
-            Route::get('favorite', [MypageController::class, 'favorite'])->name('favorite');
+            Route::get('{id}', [MypageController::class, 'show'])->name('show');
         });
     }
 );

@@ -36,6 +36,11 @@ class Event extends Model
         return $this->belongsTo(PriceType::class);
     }
 
+    public function likedUsers()
+    {
+        return $this->belongsToMany(User::class, 'event_likes');
+    }
+
     public function getImageUrlAttribute()
     {
         return asset('storage/' . $this->img);

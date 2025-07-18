@@ -45,7 +45,7 @@ return new class extends Migration
         });
 
         // いいね中間テーブル
-        Schema::create('event_user', function (Blueprint $table) {
+        Schema::create('event_likes', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->primary(['user_id', 'event_id']);
@@ -68,7 +68,7 @@ return new class extends Migration
         Schema::dropIfExists('tags');
         Schema::dropIfExists('price_types');
         Schema::dropIfExists('areas');
-        Schema::dropIfExists('event_user');
+        Schema::dropIfExists('event_likes');
         Schema::dropIfExists('event_tag');
     }
 };
