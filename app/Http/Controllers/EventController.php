@@ -36,7 +36,7 @@ class EventController extends Controller
             "img" => 'required',
             "description" => 'required',
             "place" => 'required',
-            "price" => 'required_if:price_type,paid',
+            "price" => 'required_if:price_type_id,2',
             "area_id" => 'required',
         ]);
 
@@ -50,6 +50,7 @@ class EventController extends Controller
 
         $event->user_id = auth()->id();
         $event->post_date = Carbon::now();
+        $event->price_type_id = $request->input('price_type');
         $event->save();
 
         $tagIds = $request->input('tag_id', []);

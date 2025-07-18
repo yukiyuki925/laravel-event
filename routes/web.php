@@ -42,8 +42,16 @@ Route::middleware('auth')->group(
         Route::prefix('mypage')->name('mypage.')->group(function () {
             // プロフィール画面
             Route::get('index', [MypageController::class, 'index'])->name('index');
-            // イベント新規登録処理
-            Route::post('store', [EventController::class, 'store'])->name('store');
+            // 作成したイベント一覧
+            Route::get('create-index', [MypageController::class, 'createIndex'])->name('create-index');
+            // 作成したイベント詳細
+            Route::get('{id}', [MypageController::class, 'show'])->name('show');
+            // 編集画面
+            Route::get('{id}/edit', [MypageController::class, 'edit'])->name('edit');
+            // 編集処理
+            Route::put('{id}', [MypageController::class, 'update'])->name('update');
+            // いいねしたイベント一覧
+            Route::get('favorite', [MypageController::class, 'favorite'])->name('favorite');
         });
     }
 );

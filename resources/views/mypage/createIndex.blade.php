@@ -1,17 +1,26 @@
 <x-event-layout>
-    <div class="bg-white sm:py-8 lg:py-12 mt-5">
-        <div class="mx-auto max-w-screen-2xl py-4 px-4 md:px-8">
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show"
+            class="my-6 flex items-center justify-between rounded bg-green-100 px-6 py-4 text-green-800"
+            x-transition>
+            <p>{{ session('success') }}</p>
+            <button @click="show = false" class="ml-4 text-xl leading-none text-green-800 hover:text-green-600">
+                &times;
+            </button>
+        </div>
+    @endif
+    <div class="bg-white py-6 sm:py-8 lg:py-12 mt-5">
+        <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
             <div class="mb-6 flex items-end justify-between gap-4">
-                <h2 class="text-2xl font-bold text-gray-800 lg:text-3xl">イベント一覧</h2>
-                <a href="{{ route('event.create') }}" class="inline-block rounded-lg border bg-white px-4 py-2 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:bg-gray-200 md:px-8 md:py-3 md:text-base">イベント作成</a>
+                <h2 class="text-2xl font-bold text-gray-800 lg:text-3xl">作成したイベント一覧</h2>
             </div>
             @if ($events->count())
                 <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach ($events as $event)
                         <div>
-                            <a href="{{ route('event.show', $event->id) }}"
+                            <a href="{{ route('mypage.show', $event->id) }}"
                             class="hover:gray-800 mb-1 text-black transition duration-100 lg:text-lg">{{$event->event_title}}</a>
-                            <a href="{{ route('event.show', $event->id) }}"
+                            <a href="{{ route('mypage.show', $event->id) }}"
                                 class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-gray-100 lg:mb-3">
                                 <img src="{{ $event->image_url }}" alt="イベント画像"
                                     loading="lazy"
@@ -38,7 +47,7 @@
                     @endforeach
                 </div>
             @else
-                <p>現在開催中のイベントはありません</p>
+                <p>作成したイベントはありません</p>
             @endif
         </div>
     </div>

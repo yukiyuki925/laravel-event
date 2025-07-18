@@ -16,6 +16,7 @@ class Event extends Model
         'end_time',
         'description',
         'place',
+        'price_type_id',
         'price',
         'img',
     ];
@@ -30,10 +31,17 @@ class Event extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function priceType()
+    {
+        return $this->belongsTo(PriceType::class);
+    }
+
     public function getImageUrlAttribute()
     {
         return asset('storage/' . $this->img);
     }
+
+    // event
 
     // 年月日形式に変換
     public function getFormattedStartDateAttribute()

@@ -21,6 +21,11 @@ return new class extends Migration
             $table->string('name');
         });
 
+        Schema::create('price_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
+
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->index()->constrained()->onDelete('cascade');
@@ -32,18 +37,21 @@ return new class extends Migration
             $table->time('end_time');
             $table->string('img');
             $table->integer('price')->nullable()->index();
+            $table->foreignId('price_type_id')->constrained('price_types')->onDelete('cascade');
             $table->string('place')->index();
             $table->foreignId('area_id')->nullable()->index()->constrained()->onDelete('cascade');
             $table->dateTime('post_date')->index();
             $table->timestamps();
         });
 
-        Schema::create('favorite', function (Blueprint $table) {
+        // いいね中間テーブル
+        Schema::create('event_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->primary(['user_id', 'event_id']);
         });
 
+        // タグ中間テーブル
         Schema::create('event_tag', function (Blueprint $table) {
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
@@ -58,8 +66,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('events');
         Schema::dropIfExists('tags');
+        Schema::dropIfExists('price_types');
         Schema::dropIfExists('areas');
-        Schema::dropIfExists('favorite');
+        Schema::dropIfExists('event_user');
         Schema::dropIfExists('event_tag');
     }
 };

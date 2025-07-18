@@ -13,8 +13,8 @@
 
     <!-- メニュー：常にハンバーガーで開閉 -->
     <div x-show="open" @click.outside="open = false" class="mt-3 space-y-2">
-        <a href="{{ route('mypage.index') }}" class="block text-gray-700 hover:text-blue-500">マイページ</a>
         <a href="{{ route('index') }}" class="block text-gray-700 hover:text-blue-500">イベント一覧</a>
+        <a href="{{ route('mypage.index') }}" class="block text-gray-700 hover:text-blue-500">マイページ</a>
         {{-- <a href="{{ route('profile') }}" class="block text-gray-700 hover:text-blue-500">プロフィール</a> --}}
     </div>
 </nav>
