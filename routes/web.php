@@ -3,33 +3,14 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventLikeController;
 use App\Http\Controllers\MypageController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-// イベント一覧
-Route::middleware('auth')->group(
-    function () {
-        Route::get('/', [EventController::class, 'index'])->name('index');
-    }
-);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 // event
 Route::middleware('auth')->group(
     function () {
+        // イベント一覧
+        Route::get('/', [EventController::class, 'index'])->name('index');
+
         Route::prefix('event')->name('event.')->group(function () {
             // イベント新規登録画面
             Route::get('create', [EventController::class, 'create'])->name('create');
@@ -40,9 +21,7 @@ Route::middleware('auth')->group(
         });
 
         // likes
-        Route::post('/event/{event}/like', [EventLikeController::class, 'like'])
-            ->middleware('auth')
-            ->name('event-like');
+        Route::post('/event/{event}/like', [EventLikeController::class, 'like'])->name('event-like');
 
         // profile
         Route::prefix('mypage')->name('mypage.')->group(function () {

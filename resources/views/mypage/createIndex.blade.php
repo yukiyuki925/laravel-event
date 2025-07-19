@@ -28,7 +28,7 @@
                             </a>
 
                             <div class="flex justify-start mb-2">
-                                <p class=" text-red-500 lg:text-lg">{{$event->formatted_start_date}}〜{{$event->formatted_end_date}}</p>
+                                <p class="text-red-500">{{$event->formatted_start_date}}〜{{$event->formatted_end_date}}</p>
                             </div>
 
                             <div>
